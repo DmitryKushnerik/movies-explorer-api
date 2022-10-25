@@ -8,8 +8,10 @@
 Репозитории Github:
 * Frontend https://github.com/DmitryKushnerik/movies-explorer-frontend
 * Backend https://github.com/DmitryKushnerik/movies-explorer-api
+
 IP-адрес сайта:
 * 178.154.204.234
+
 Ссылки:
 * Frontend https://kushnerik-diplom.nomoredomains.icu
 * Backend https://api.kushnerik-diplom.nomoredomains.icu
