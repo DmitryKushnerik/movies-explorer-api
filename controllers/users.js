@@ -3,10 +3,17 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
-const AuthorisationError = require('../errors/AuthorisationError');
 const NotFoundError = require('../errors/NotFoundError');
 const ValidationError = require('../errors/ValidationError');
 const UserExistsError = require('../errors/UserExistsError');
+const {
+  messageWrongUserData,
+  messageDoubleEmail,
+  messageUserNotFound,
+  messageWrongUserId,
+  messageLogIn,
+  messageLogOut,
+} = require('../utils/messages');
 
 // Создать нового пользователя
 module.exports.createUser = (req, res, next) => {
@@ -26,9 +33,10 @@ module.exports.createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new ValidationError('Переданы некорректные данные при создании пользователя'));
-      } if (err.code === 11000) {
-        return next(new UserExistsError('Пользователь с указанным e-mail уже зарегистрирован'));
+        return next(new ValidationError(messageWrongUserData));
+      }
+      if (err.code === 11000) {
+        return next(new UserExistsError(messageDoubleEmail));
       }
       return next(err);
     });
@@ -40,13 +48,13 @@ module.exports.getUserInfo = (req, res, next) => {
   User.findById(userID)
     .then((user) => {
       if (!user) {
-        return next(new NotFoundError('Пользователь по указанному _id не найден'));
+        return next(new NotFoundError(messageUserNotFound));
       }
       return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new ValidationError('Передан некорректный id пользователя'));
+        return next(new ValidationError(messageWrongUserId));
       }
       return next(err);
     });
@@ -62,13 +70,16 @@ module.exports.updateUserInfo = (req, res, next) => {
   )
     .then((user) => {
       if (!user) {
-        return next(new NotFoundError('Пользователь по указанному _id не найден'));
+        return next(new NotFoundError(messageUserNotFound));
       }
       return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new ValidationError('Переданы некорректные данные при обновлении профиля'));
+        return next(new ValidationError(messageWrongUserData));
+      }
+      if (err.code === 11000) {
+        return next(new UserExistsError(messageDoubleEmail));
       }
       return next(err);
     });
@@ -89,16 +100,13 @@ module.exports.login = (req, res, next) => {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
         })
-        .end();
+        .send({ message: messageLogIn });
     })
-    .catch(() => next(new AuthorisationError('Произошла ошибка авторизации')));
+    .catch(next);
 };
 
 // Выход из системы
 module.exports.logout = (req, res, next) => {
-  try {
-    res.clearCookie('jwt').end();
-  } catch (err) {
-    next(err);
-  }
+  res.clearCookie('jwt').send({ message: messageLogOut });
+  return next();
 };
