@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-const { AuthorisationError } = require('../errors/AuthorisationError');
+const AuthorisationError = require('../errors/AuthorisationError');
 const { emailTemplate } = require('../utils/validation');
 const { messageWrongCredentials } = require('../utils/messages');
 
