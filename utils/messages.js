@@ -11,3 +11,4 @@ module.exports.messageLogOut = 'Вы вышли из системы';
 module.exports.messageNeedAuthorisation = 'Необходима авторизация';
 module.exports.messageWrongCredentials = 'Неправильные почта или пароль';
 module.exports.messageUrlNotFound = 'Запрошенный URL не найден';
+module.exports.messageDefaultError = 'На сервере произошла ошибка';
