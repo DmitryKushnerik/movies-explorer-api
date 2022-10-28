@@ -1,0 +1,14 @@
+module.exports.messageWrongMovieData = 'Переданы некорректные данные при создании записи';
+module.exports.messageMovieNotFound = 'Запись с указанным _id не найдена';
+module.exports.messageForbidden = 'У пользователя нет прав на это действие';
+module.exports.messageWrongMovieId = 'Передан некорректный _id записи';
+module.exports.messageWrongUserData = 'Переданы некорректные данные пользователя';
+module.exports.messageDoubleEmail = 'Пользователь с указанным e-mail уже зарегистрирован';
+module.exports.messageUserNotFound = 'Пользователь по указанному _id не найден';
+module.exports.messageWrongUserId = 'Передан некорректный id пользователя';
+module.exports.messageLogIn = 'Вы вошли в систему';
+module.exports.messageLogOut = 'Вы вышли из системы';
+module.exports.messageNeedAuthorisation = 'Необходима авторизация';
+module.exports.messageWrongCredentials = 'Неправильные почта или пароль';
+module.exports.messageUrlNotFound = 'Запрошенный URL не найден';
+module.exports.messageDefaultError = 'На сервере произошла ошибка';
